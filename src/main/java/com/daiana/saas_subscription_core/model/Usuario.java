@@ -1,4 +1,4 @@
-package com.daiana.saassubscriptioncore.model;
+package com.daiana.saas_subscription_core.model;
 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
