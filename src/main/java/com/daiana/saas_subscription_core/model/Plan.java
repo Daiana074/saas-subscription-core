@@ -22,46 +22,48 @@ public class Plan {
     /**
      * @GeneratedValue especifica la estrategia de generación de la clave.
      * GenerationType.IDENTITY mapea directamente con el AUTO_INCREMENT de MySQL.
-     * Le delega el cálculo del ID al motor de la base de datos.
      */
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     /**
      * @Column mapea el atributo con la columna correspondiente en la tabla.
-     * nullable = false equivale al NOT NULL que escribimos en el script de base de datos.
+     * nullable = false equivale al NOT NULL.
      */
     @Column(nullable = false, length = 50)
     private String nombre;
 
+    @Column(columnDefinition = "TEXT")
+    private String descripcion;
+
     /**
      * Usamos BigDecimal en Java para mapear el tipo DECIMAL(10,2) de SQL.
-     * Es la clase de Java diseñada para cálculos financieros de precisión absoluta.
      */
     @Column(nullable = false, precision = 10, scale = 2)
     private BigDecimal precio;
+
+    @Column(name = "duracion_dias", nullable = false)
+    private Integer duracionDias;
 
     // =========================================================================
     // CONSTRUCTORES (Buenas prácticas de POJOs)
     // =========================================================================
 
     /**
-     * Constructor vacío obligatorio.
-     * Hibernate lo necesita sí o sí para poder instanciar la clase de forma automática
-     * cuando recupera registros de la base de datos.
+     * Constructor vacío obligatorio para Hibernate.
      */
     public Plan() {
     }
 
     /**
-     * Constructor completo.
-     * Nos sirve a nosotros cuando queremos instanciar un objeto Plan en memoria
-     * con todos sus datos listos en el código de Java.
+     * Constructor completo para instanciarlo con todos sus campos de forma manual.
      */
-    public Plan(Long id, String nombre, BigDecimal precio) {
+    public Plan(Long id, String nombre, String descripcion, BigDecimal precio, Integer duracionDias) {
         this.id = id;
         this.nombre = nombre;
+        this.descripcion = descripcion;
         this.precio = precio;
+        this.duracionDias = duracionDias;
     }
 
     // =========================================================================
@@ -84,6 +86,14 @@ public class Plan {
         this.nombre = nombre;
     }
 
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
     public BigDecimal getPrecio() {
         return precio;
     }
@@ -92,4 +102,12 @@ public class Plan {
         this.precio = precio;
     }
 
-} // <--- Esta llave cierra formalmente la clase Plan. Todo quedó guardado acá adentro.
+    public Integer getDuracionDias() {
+        return duracionDias;
+    }
+
+    public void setDuracionDias(Integer duracionDias) {
+        this.duracionDias = duracionDias;
+    }
+
+} // <--- Esta llave cierra formalmente la clase Plan.

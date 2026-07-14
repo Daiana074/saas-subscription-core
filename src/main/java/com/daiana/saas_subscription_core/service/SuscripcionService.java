@@ -1,5 +1,6 @@
 package com.daiana.saas_subscription_core.service;
 
+import com.daiana.saas_subscription_core.dto.PlanRequestDTO;
 import com.daiana.saas_subscription_core.model.Plan;
 import com.daiana.saas_subscription_core.model.Suscripcion;
 import com.daiana.saas_subscription_core.model.Usuario;
@@ -8,6 +9,7 @@ import com.daiana.saas_subscription_core.repository.SuscripcionRepository;
 import com.daiana.saas_subscription_core.repository.UsuarioRepository;
 import org.springframework.stereotype.Service;
 import java.time.LocalDate;
+import java.util.List;
 
 /**
  * Servicio encargado de la lógica de negocio para la contratación

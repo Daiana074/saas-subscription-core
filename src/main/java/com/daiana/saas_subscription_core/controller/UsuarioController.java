@@ -1,11 +1,16 @@
 package com.daiana.saas_subscription_core.controller;
 
+import com.daiana.saas_subscription_core.dto.PlanRequestDTO;
 import com.daiana.saas_subscription_core.dto.UsuarioRequestDTO;
 import com.daiana.saas_subscription_core.dto.UsuarioResponseDTO;
+import com.daiana.saas_subscription_core.model.Plan;
+import com.daiana.saas_subscription_core.service.SuscripcionService;
 import com.daiana.saas_subscription_core.service.UsuarioService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * @RestController le avisa a Spring Boot que esta clase va a exponer URLs (endpoints)
@@ -40,4 +45,6 @@ public class UsuarioController {
         // Esto le confirma al navegador que el registro en MySQL fue un éxito total.
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
+
+
 }

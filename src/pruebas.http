@@ -1,9 +1,0 @@
-### Registrar un nuevo usuario de prueba
-POST http://localhost:8080/api/usuarios
-Content-Type: application/json
-
-{
-  "nombre": "Daiana Test",
-  "email": "daiana@test.com",
-  "password": "claveSegura123"
-}
