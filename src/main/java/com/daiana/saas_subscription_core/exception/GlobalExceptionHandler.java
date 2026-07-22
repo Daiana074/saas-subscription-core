@@ -8,16 +8,9 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.time.LocalDateTime;
 
-/**
- * @RestControllerAdvice intercepta cualquier excepción no controlada
- * que ocurra en nuestros controladores y la transforma en una respuesta JSON clara.
- */
-@RestControllerAdvice
+@RestControllerAdvice(basePackages = "com.daiana.saas_subscription_core.controller")
 public class GlobalExceptionHandler {
 
-    /**
-     * Intercepta las excepciones RuntimeException lanzadas desde nuestros servicios.
-     */
     @ExceptionHandler(RuntimeException.class)
     public ResponseEntity<ErrorResponseDTO> manejarRuntimeException(RuntimeException ex) {
 
@@ -31,9 +24,6 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(errorDTO, HttpStatus.BAD_REQUEST);
     }
 
-    /**
-     * Intercepta cualquier otra excepción genérica del sistema.
-     */
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponseDTO> manejarExcepcionGeneral(Exception ex) {
 

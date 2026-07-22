@@ -1,30 +1,80 @@
-# SaaS Subscription & Billing Core
+# 🚀 SaaS Subscription & Billing Core
 
-Un sistema robusto y centralizado para la gestión de usuarios, planes de suscripción y facturación automatizada (SaaS Core). Este proyecto fue diseñado y desarrollado para consolidar habilidades avanzadas en desarrollo Backend con Java y Spring Boot, optimización de bases de datos relacionales y despliegue en la nube.
-
----
-
-## 🎯 Objetivos del Proyecto
-* **Lógica de Negocio Real:** Implementar un motor que controle estados de suscripción (Activo, Vencido, Cancelado) basado en fechas y pagos simulados.
-* **Optimización en Base de Datos:** Aplicar procedimientos almacenados y optimización de consultas en MySQL para la automatización de procesos internos.
-* **Integración con Inteligencia Artificial:** Consumir APIs de modelos de lenguaje para ofrecer recomendaciones de planes personalizadas a los usuarios según sus patrones de uso.
-* **Arquitectura Limpia y DevOps:** Desarrollar una API REST robusta bajo buenas prácticas (DTOs, manejo global de excepciones, validaciones) y desplegarla de forma segura utilizando infraestructura en la nube.
+Un sistema backend robusto, centralizado y transaccional para la gestión de usuarios, planes comerciales, contratos de suscripción y facturación automatizada (SaaS Core). Diseñado y desarrollado bajo arquitectura limpia y buenas prácticas de desarrollo en **Java** y **Spring Boot**.
 
 ---
 
-## 🛠️ Tecnologías y Herramientas (En Desarrollo)
-
-* **Backend:** Java 17+, Spring Boot (Spring Data JPA, Spring Web).
-* **Base de Datos:** MySQL Server (Stored Procedures, DML avanzado y optimización de índices).
-* **Infraestructura & Nube:** Oracle Cloud Infrastructure (OCI).
-* **Herramientas de Productividad:** Git, GitHub, Inteligencia Artificial Generativa.
+## 👩‍💻 Desarrollado por
+* **Nombre:** Daiana Camacho
+* **GitHub:** [@Daiana074](https://github.com/Daiana074)
+* **Contacto:** daii.camacho31@gmail.com
 
 ---
 
-## 📅 Estado del Proyecto: 🚧 En Construcción
+## 🎯 Objetivos y Características Principales
 
-* [ ] **Fase 1:** Diseño de Arquitectura y Modelo Entidad-Relación (MySQL).
-* [ ] **Fase 2:** Construcción del Núcleo de la API REST (Spring Boot).
-* [ ] **Fase 3:** Desarrollo de Interfaz de Usuario e Integración (Frontend / JS Fetch).
-* [ ] **Fase 4:** Automatización de Base de Datos e Integración de IA.
-* [ ] **Fase 5:** Despliegue en la Nube y Documentación Final.
+* **Gestión de Usuarios y Planes:** Registro de clientes y configuración de planes comerciales con reglas de negocio dinámicas (precio y duración en días).
+* **Motor de Suscripciones Transaccional:** Procesamiento de altas de suscripciones con cálculo automático de fechas de vencimiento según el plan seleccionado.
+* **Control de Reglas de Negocio:** Validación estricta para evitar suscripciones activas duplicadas por usuario y habilitación de gestión de ciclo de vida (Cancelaciones).
+* **Facturación Automatizada:** Emisión instantánea e íntegra de facturas al confirmar una contratación, utilizando relaciones relacionales y precisión en BigDecimal.
+* **Mapeo DTO y Manejo de Excepciones:** Uso de Records/DTOs para encapsulamiento y un `@RestControllerAdvice` global que responde con estándares HTTP limpios (`400 Bad Request`, `404 Not Found`).
+
+---
+
+## 🛠️ Tecnologías Utilizadas
+
+* **Lenguaje:** Java 17+
+* **Framework Backend:** Spring Boot 3 (Spring Data JPA, Spring Web)
+* **Base de Datos:** MySQL Server (Persistencia Relacional)
+* **Herramientas de Desarrollo & Pruebas:** Maven, Git, GitHub, Postman, IntelliJ IDEA
+
+---
+
+## 📌 Endpoints de la API REST
+
+### 👤 Usuarios (`/api/usuarios`)
+| Método | Endpoint | Descripción |
+| :--- | :--- | :--- |
+| `POST` | `/api/usuarios` | Registrar un nuevo usuario |
+| `GET` | `/api/usuarios` | Listar todos los usuarios |
+| `GET` | `/api/usuarios/{id}` | Buscar usuario por ID |
+
+### 💼 Planes Comerciales (`/api/planes`)
+| Método | Endpoint | Descripción |
+| :--- | :--- | :--- |
+| `POST` | `/api/planes` | Crear un nuevo plan comercial |
+| `GET` | `/api/planes` | Listar planes disponibles |
+| `GET` | `/api/planes/{id}` | Buscar plan por ID |
+
+### 💳 Suscripciones (`/api/suscripciones`)
+| Método | Endpoint | Descripción |
+| :--- | :--- | :--- |
+| `POST` | `/api/suscripciones` | Activar suscripción (genera factura automática y valida no duplicados) |
+| `GET` | `/api/suscripciones` | Listar todas las suscripciones |
+| `GET` | `/api/suscripciones/usuario/{id}` | Consultar historial de suscripciones de un usuario |
+| `PUT` | `/api/suscripciones/{id}/cancelar` | Cancelar una suscripción activa |
+
+### 📄 Facturación (`/api/facturas`)
+| Método | Endpoint | Descripción |
+| :--- | :--- | :--- |
+| `GET` | `/api/facturas` | Listar todas las facturas del sistema |
+| `GET` | `/api/facturas/suscripcion/{id}` | Consultar facturas de una suscripción |
+| `PUT` | `/api/facturas/{id}/estado` | Actualizar estado de pago (`PAGADA`, `PENDIENTE`, `ANULADA`) |
+
+---
+
+## 📅 Estado del Proyecto: 🟢 Backend Core Completado (100%)
+
+- [x] **Fase 1:** Diseño del Modelo Entidad-Relación y Tablas Relacionales en MySQL.
+- [x] **Fase 2:** Construcción del Backend Core API REST con Spring Boot, DTOs y Servicios.
+- [x] **Fase 3:** Lógica de Negocio Transaccional (Cálculo de fechas, Facturación Automática, Manejo Global de Excepciones).
+- [x] **Fase 4:** Pruebas e Integración de Endpoints mediante Postman.
+- [ ] **Fase 5:** Integración de Servicios Adicionales / Despliegue en la Nube.
+
+---
+
+## ⚙️ Cómo ejecutar el proyecto localmente
+
+1. Clonar el repositorio:
+   ```bash
+   git clone [https://github.com/Daiana074/saas-subscription-core.git](https://github.com/Daiana074/saas-subscription-core.git)
