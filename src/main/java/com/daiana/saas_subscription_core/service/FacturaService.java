@@ -1,19 +1,15 @@
 package com.daiana.saas_subscription_core.service;
 
 import com.daiana.saas_subscription_core.model.Factura;
-import com.daiana.saas_subscription_core.model.Suscripcion;
 import com.daiana.saas_subscription_core.repository.FacturaRepository;
 import org.springframework.stereotype.Service;
-import java.math.BigDecimal;
+import jakarta.transaction.Transactional;
 
-/**
- * Servicio encargado de la lógica financiera, emisión de comprobantes
- * y control del estado de los pagos de las suscripciones.
- */
+import java.util.List;
+
 @Service
 public class FacturaService {
 
-    // INYECCIÓN DE DEPENDENCIAS: Necesitamos el repositorio para impactar las facturas en MySQL.
     private final FacturaRepository facturaRepository;
 
     public FacturaService(FacturaRepository facturaRepository) {
@@ -21,26 +17,34 @@ public class FacturaService {
     }
 
     /**
-     * MÉTODO DE NEGOCIO: Emitir una factura automática basada en un contrato de suscripción.
-     * @param suscripcion El objeto completo del contrato que se acaba de generar.
+     * Obtiene todas las facturas registradas en la base de datos.
      */
-    public Factura emitirFacturaInicial(Suscripcion suscripcion) {
+    public List<Factura> listarTodas() {
+        return facturaRepository.findAll();
+    }
 
-        // 1. REGLA DE NEGOCIO: Extraer el precio del plan navegando por los objetos.
-        // Gracias a la POO, no necesitamos buscar el precio en la base de datos otra vez;
-        // el objeto Suscripcion ya trae adentro su Plan asociado y, por ende, su precio.
-        BigDecimal montoAPagar = suscripcion.getPlan().getPrecio();
+    /**
+     * Obtiene las facturas vinculadas a una suscripción específica.
+     */
+    public List<Factura> listarPorSuscripcion(Long suscripcionId) {
+        return facturaRepository.findBySuscripcionId(suscripcionId);
+    }
 
-        // 2. CREACIÓN DEL COMPROBANTE: Instanciamos el modelo de Factura
-        Factura nuevaFactura = new Factura();
-        nuevaFactura.setSuscripcion(suscripcion); // Amarramos la factura a su contrato
-        nuevaFactura.setMonto(montoAPagar);       // Asignamos el monto con precisión matemática (BigDecimal)
-        nuevaFactura.setEstadoPago("PENDIENTE");  // Nace pendiente hasta que la pasarela de pago confirme impactación
+    /**
+     * Busca una factura por su ID.
+     */
+    public Factura buscarPorId(Long id) {
+        return facturaRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Error: No se encontró la factura con ID " + id));
+    }
 
-        // NOTA DE AUDITORÍA: El campo "fechaEmision" no lo seteamos acá porque recordá que pusimos
-        // que sea administrado automáticamente por el TIMESTAMP de MySQL.
-
-        // 3. PERSISTENCIA: Guardamos el registro contable en la tabla "facturas" de MySQL
-        return facturaRepository.save(nuevaFactura);
+    /**
+     * Permite cambiar el estado de pago de una factura (ej: de PENDIENTE a PAGADA o ANULADA).
+     */
+    @Transactional
+    public Factura actualizarEstadoPago(Long facturaId, String nuevoEstado) {
+        Factura factura = buscarPorId(facturaId);
+        factura.setEstadoPago(nuevoEstado);
+        return facturaRepository.save(factura);
     }
 }
